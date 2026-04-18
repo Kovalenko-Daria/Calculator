@@ -2,15 +2,17 @@ package calc.model;
 
 import org.junit.Test;
 
+import java.math.BigDecimal;
+
 import static org.junit.Assert.*;
 
 public class NumberExpressionTest {
 
     @Test
     public void getNumberTest() {
-        Double expectedValue = 1.86374;
-        NumberExpression num = new NumberExpression(expectedValue);
-        Double actualValue = num.getNumber();
+        BigDecimal expectedValue = new BigDecimal("1.86374");
+        NumberExpression num = new NumberExpression(new Double("1.86374"));
+        BigDecimal actualValue = num.getNumber();
         assertEquals(expectedValue, actualValue);
     }
 

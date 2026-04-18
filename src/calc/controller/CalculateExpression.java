@@ -4,6 +4,7 @@ import calc.exceptions.*;
 import calc.model.*;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 
 public class CalculateExpression {
@@ -58,7 +59,7 @@ public class CalculateExpression {
                 if (num2.equals(BigDecimal.ZERO)) {
                     throw new DivisionByZeroException("Division by zero");
                 }
-                return num1.divide(num2);
+                return num1.divide(num2, 6, RoundingMode.HALF_UP);
             }
         }
         throw new UnknownOperationException("Unknown binary operation " + operation);

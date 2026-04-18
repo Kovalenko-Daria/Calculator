@@ -8,6 +8,8 @@ import calc.model.NumberExpression;
 import calc.model.Operation;
 import org.junit.Test;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
@@ -16,10 +18,10 @@ public class CalculateExpressionTest {
 
     @Test
     public void calculateBinaryAddTest() {
-        Double num1 = 16.5;
-        Double num2 = 16.5;
-        Double expectedValue = num1 + num2;
-        Double actualValue = null;
+        BigDecimal num1 = new BigDecimal(16.5);
+        BigDecimal num2 = new BigDecimal(16.5);
+        BigDecimal expectedValue = num1.add(num2);
+        BigDecimal actualValue = null;
         try {
             actualValue = CalculateExpression.calculateBinary(num1, num2, Operation.ADDITION);
         } catch(Exception e) {
@@ -30,10 +32,10 @@ public class CalculateExpressionTest {
 
     @Test
     public void calculateBinarySubTest() {
-        Double num1 = 16.5;
-        Double num2 = 7.635;
-        Double expectedValue = num1 - num2;
-        Double actualValue = null;
+        BigDecimal num1 = new BigDecimal(16.5);
+        BigDecimal num2 = new BigDecimal(7.635);
+        BigDecimal expectedValue = num1.subtract(num2);
+        BigDecimal actualValue = null;
         try {
             actualValue = CalculateExpression.calculateBinary(num1, num2, Operation.SUBTRACTION);
         } catch(Exception e) {
@@ -44,10 +46,10 @@ public class CalculateExpressionTest {
 
     @Test
     public void calculateBinaryMulTest() {
-        Double num1 = 1.5;
-        Double num2 = 7.90;
-        Double expectedValue = num1 * num2;
-        Double actualValue = null;
+        BigDecimal num1 = new BigDecimal(1.5);
+        BigDecimal num2 = new BigDecimal(7.90);
+        BigDecimal expectedValue = num1.multiply(num2);
+        BigDecimal actualValue = null;
         try {
             actualValue = CalculateExpression.calculateBinary(num1, num2, Operation.MULTIPLICATION);
         } catch(Exception e) {
@@ -58,10 +60,10 @@ public class CalculateExpressionTest {
 
     @Test
     public void calculateBinaryDivTest() {
-        Double num1 = 7.0;
-        Double num2 = 4.7;
-        Double expectedValue = num1 / num2;
-        Double actualValue = null;
+        BigDecimal num1 = new BigDecimal(7.0);
+        BigDecimal num2 = new BigDecimal(4.7);
+        BigDecimal expectedValue = num1.divide(num2, 6, RoundingMode.HALF_UP);
+        BigDecimal actualValue = null;
         try {
             actualValue = CalculateExpression.calculateBinary(num1, num2, Operation.DIVISION);
         } catch(Exception e) {
@@ -72,9 +74,9 @@ public class CalculateExpressionTest {
 
     @Test
     public void calculateBinaryDivZeroTest() {
-        Double num1 = 16.5;
-        Double num2 = 0.0;
-        Double actualValue = null;
+        BigDecimal num1 = new BigDecimal(16.5);
+        BigDecimal num2 = new BigDecimal(0.0);
+        BigDecimal actualValue = null;
         try {
             actualValue = CalculateExpression.calculateBinary(num1, num2, Operation.DIVISION);
         } catch(DivisionByZeroException e) {
@@ -87,9 +89,9 @@ public class CalculateExpressionTest {
 
     @Test
     public void calculateBinaryUnknownTest() {
-        Double num1 = 16.5;
-        Double num2 = 16.5;
-        Double actualValue = null;
+        BigDecimal num1 = new BigDecimal(16.5);
+        BigDecimal num2 = new BigDecimal(16.5);
+        BigDecimal actualValue = null;
         try {
             actualValue = CalculateExpression.calculateBinary(num1, num2, Operation.UNMIN);
         } catch(UnknownOperationException e) {
@@ -101,9 +103,9 @@ public class CalculateExpressionTest {
 
     @Test
     public void calculateUnaryTest() {
-        Double num1 = 16.5;
-        Double expectedValue = num1 * -1;
-        Double actualValue = null;
+        BigDecimal num1 = new BigDecimal(16.5);
+        BigDecimal expectedValue = num1.multiply(BigDecimal.valueOf(-1));
+        BigDecimal actualValue = null;
         try {
             actualValue = CalculateExpression.calculateUnary(num1, Operation.UNMIN);
         } catch(Exception e) {
@@ -114,8 +116,8 @@ public class CalculateExpressionTest {
 
     @Test
     public void calculateUnaryUnknownTest() {
-        Double num1 = 16.5;
-        Double actualValue = null;
+        BigDecimal num1 = new BigDecimal(16.5);
+        BigDecimal actualValue = null;
         try {
             actualValue = CalculateExpression.calculateUnary(num1, Operation.ADDITION);
         } catch(UnknownOperationException e) {
@@ -129,8 +131,8 @@ public class CalculateExpressionTest {
 
     @Test
     public void calculateExpressionFloatNumTest() {
-        Double expectedValue = 3.5394;
-        Double actualValue = null;
+        BigDecimal expectedValue = new BigDecimal("3.5394");
+        BigDecimal actualValue = null;
         try {
             Expression expression = ExpressionParse.parseExpression("3.5394");
             actualValue = CalculateExpression.calculateExpression(expression);
@@ -142,8 +144,8 @@ public class CalculateExpressionTest {
 
     @Test
     public void calculateExpressionSimpleNumTest() {
-        Double expectedValue = 12345.0;
-        Double actualValue = null;
+        BigDecimal expectedValue = new BigDecimal("12345.0");
+        BigDecimal actualValue = null;
         try {
             Expression expression = ExpressionParse.parseExpression("12345");
             actualValue = CalculateExpression.calculateExpression(expression);
@@ -155,8 +157,8 @@ public class CalculateExpressionTest {
 
     @Test
     public void calculateExpressionSimpleExpTest() {
-        Double expectedValue = 7.1;
-        Double actualValue = null;
+        BigDecimal expectedValue = new BigDecimal("7.1");
+        BigDecimal actualValue = null;
         try {
             Expression expression = ExpressionParse.parseExpression("3.8 + 12 - 8.7");
             actualValue = CalculateExpression.calculateExpression(expression);
@@ -168,53 +170,53 @@ public class CalculateExpressionTest {
 
     @Test
     public void calculateExpressionSimpleExpMultDivTest() {
-        Double expectedValue = -50.0;
-        Double actualValue = null;
+        BigDecimal expectedValue = new BigDecimal("-50.0");
+        BigDecimal actualValue = null;
         try {
             Expression expression = ExpressionParse.parseExpression("1 + 2 - 9 * 6 + 5 / 5");
             actualValue = CalculateExpression.calculateExpression(expression);
         } catch (Exception e) {
             fail("Exception thrown");
         }
-        assertEquals(expectedValue, actualValue);
+        assertEquals(0, expectedValue.compareTo(actualValue));
     }
 
     @Test
     public void calculateExpressionSimpleSkobTest() {
-        Double expectedValue = -12.0;
-        Double actualValue = null;
+        BigDecimal expectedValue = new BigDecimal("-12");
+        BigDecimal actualValue = null;
         try {
             Expression expression = ExpressionParse.parseExpression("7 + 8 - (1 + 2) * 9");
             actualValue = CalculateExpression.calculateExpression(expression);
         } catch (Exception e) {
             fail("Exception thrown");
         }
-        assertEquals(expectedValue, actualValue);
+        assertEquals(0, expectedValue.compareTo(actualValue));
     }
 
     @Test
     public void calculateExpressionComplSkobTest() {
-        Double expectedValue = 57.53;
-        Double actualValue = null;
+        BigDecimal expectedValue = new BigDecimal("57.53");
+        BigDecimal actualValue = null;
         try {
             Expression expression = ExpressionParse.parseExpression("7.56 + (8.89 - (1.23 + 2.4)) * 9.5");
             actualValue = CalculateExpression.calculateExpression(expression);
         } catch (Exception e) {
             fail("Exception thrown");
         }
-        assertEquals(expectedValue, actualValue);
+        assertEquals(0, expectedValue.compareTo(actualValue));
     }
 
     @Test
     public void calculateExpressionUnMinSimpleTest() {
-        Double expectedValue = 8.0;
-        Double actualValue = null;
+        BigDecimal expectedValue = new BigDecimal(8.0);
+        BigDecimal actualValue = null;
         try {
             Expression expression = ExpressionParse.parseExpression("-5+13");
             actualValue = CalculateExpression.calculateExpression(expression);
         } catch (Exception e) {
             fail("Exception thrown");
         }
-        assertEquals(expectedValue, actualValue);
+        assertEquals(0, expectedValue.compareTo(actualValue));
     }
 }

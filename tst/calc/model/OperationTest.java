@@ -2,6 +2,8 @@ package calc.model;
 
 import org.junit.Test;
 
+import java.math.BigDecimal;
+
 import static org.junit.Assert.*;
 
 public class OperationTest {
@@ -57,14 +59,14 @@ public class OperationTest {
 
     @Test
     public void getPriorityAddTest() {
-        int expectedValue = 0;
+        int expectedValue = 1;
         int actualValue = Operation.ADDITION.getPriority();
         assertEquals(expectedValue, actualValue);
     }
 
     @Test
     public void getPrioritySubTest() {
-        int expectedValue = 0;
+        int expectedValue = 1;
         int actualValue = Operation.SUBTRACTION.getPriority();
         assertEquals(expectedValue, actualValue);
     }
@@ -78,28 +80,28 @@ public class OperationTest {
 
     @Test
     public void getPriorityMultTest() {
-        int expectedValue = 1;
+        int expectedValue = 2;
         int actualValue = Operation.MULTIPLICATION.getPriority();
         assertEquals(expectedValue, actualValue);
     }
 
     @Test
     public void getPriorityDivTest() {
-        int expectedValue = 1;
+        int expectedValue = 2;
         int actualValue = Operation.DIVISION.getPriority();
         assertEquals(expectedValue, actualValue);
     }
 
     @Test
     public void getPriorityOpenTest() {
-        int expectedValue = 2;
+        int expectedValue = 0;
         int actualValue = Operation.OPEN.getPriority();
         assertEquals(expectedValue, actualValue);
     }
 
     @Test
     public void getPriorityCloseTest() {
-        int expectedValue = 2;
+        int expectedValue = 0;
         int actualValue = Operation.CLOSE.getPriority();
         assertEquals(expectedValue, actualValue);
     }
@@ -253,7 +255,7 @@ public class OperationTest {
 
     @Test
     public void getNumberTest() {
-        Double actualValue = Operation.ADDITION.getNumber();
+        BigDecimal actualValue = Operation.ADDITION.getNumber();
         assertNull(actualValue);
     }
 
